@@ -4,21 +4,30 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+
+import fl1cksh0t.main.graphics.Screen;
 
 public class Game extends Canvas implements Runnable
 {
 	private static final long serialVersionUID = -3316329364487365225L;
 
-	public static final int WIDTH = 900, HEIGHT = 600;
-	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.01";
+	public static final int WIDTH = 800, HEIGHT = 600;
+	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.02";
 	
 	private Thread thread;
+	private Screen screen;
 	private boolean running = false;
-
+	private BufferedImage img;
+	private int[] pixels;
 	
 	public Game()
 	{
 		new Window(WIDTH, HEIGHT, TITLE, this);	//creating game window in game class
+		screen = new Screen(WIDTH, HEIGHT);
+		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		pixels = ((DataBufferInt)img.getRaster().getDataBuffer()).getData();
 	}
 	
 	public synchronized void start()
@@ -97,20 +106,29 @@ public class Game extends Canvas implements Runnable
 	private void render()
 	{
 		BufferStrategy bs = this.getBufferStrategy();
-		if(bs == null)
+		if(bs == null)	//only want bs to run once, as it's in the render function, which is called repeatedly
 		{
-			this.createBufferStrategy(3);
+			this.createBufferStrategy(3);	//might have to take this. out at some stage, not sure though
 			return;
+		}
+		
+		screen.render();
+		
+		for (int i = 0; i<WIDTH * HEIGHT; i++)
+		{
+			pixels[i] = screen.pixels[i];
 		}
 		
 		Graphics g = bs.getDrawGraphics();
 		
-		g.setColor(Color.green);
-		g.fillRect(0, 0, 300, 600);
+		/*g.setColor(Color.green);		//Irish Flag graphics (green white and orange)
+		g.fillRect(0, 0, 266, 599);
 		g.setColor(Color.white);
-		g.fillRect(300, 0, 300, 600);
+		g.fillRect(266, 0, 266, 599);
 		g.setColor(Color.orange);
-		g.fillRect(600, 0, 300, 600);
+		g.fillRect(532, 0, 266, 599);*/
+		
+		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
 		
 		g.dispose();
 		bs.show();
