@@ -10,7 +10,7 @@ public class Game extends Canvas implements Runnable
 	
 	public Game()
 	{
-		new Window(WIDTH, HEIGHT, "fl1cksh0t version: Very Beta", this);
+		new Window(WIDTH, HEIGHT, "fl1cksh0t version: V3ry B374", this);
 	}
 	
 	public synchronized void start()
