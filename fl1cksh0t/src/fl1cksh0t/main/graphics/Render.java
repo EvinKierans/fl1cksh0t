@@ -18,11 +18,23 @@ public class Render
 		for(int y = 0; y < render.height; y++)
 		{
 			int yPix = y + yOffs;
+			if(yPix < 0 || yPix >= this.height)
+			{
+				continue;
+			}
 			for(int x = 0; x < render.width; x++)
 			{
 				int xPix = x + xOffs;
+				if(xPix < 0 || xPix >= this.width)
+				{
+					continue;
+				}
 				
-				pixels[xPix + yPix * width] = render.pixels[x + y * render.width];
+				int alpha = render.pixels[x + y * render.width];	//alpha support of sorts
+				if(alpha > 0 )										// bit of a heavy dip in performance
+				{
+					pixels[xPix + yPix * width] = alpha;
+				}
 			}
 		}
 	}
