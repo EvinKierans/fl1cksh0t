@@ -10,8 +10,8 @@ public class Screen extends Render
 	{
 		super(width, height);
 		Random random = new Random();
-		test = new Render(256, 256);
-		for(int i = 0; i < 256*256; i++)
+		test = new Render(128, 128);
+		for(int i = 0; i < 128*128; i++)
 		{
 			test.pixels[i] = random.nextInt();	
 		}
@@ -30,7 +30,7 @@ public class Screen extends Render
 		{
 			int animX = (int) (Math.sin((System.currentTimeMillis()+i*10) % 1000.0 / 1000 * Math.PI * (rotationSpeed * 2)) * 200);	//makes it move and jingle :O
 			int animY = (int) (Math.cos((System.currentTimeMillis()+i*10) % 1000.0 / 1000 * Math.PI * (rotationSpeed * 2)) * 200);	//+i*100 is a genius part to optimise performance. When i is 1000 we get ~45-50 fps. When i is 10 * 100 we get 1100 fps
-			draw(test, (width - 256 ) / 2 + animX, (height - 256) / 2 + animY);	//testing render from Render.java
+			draw(test, (width - 128 ) / 2 + animX, (height - 128) / 2 + animY);	//testing render from Render.java
 		}
 	}
 }

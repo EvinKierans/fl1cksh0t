@@ -123,13 +123,6 @@ public class Game extends Canvas implements Runnable
 		
 		Graphics g = bs.getDrawGraphics();
 		
-		/*g.setColor(Color.green);		//Irish Flag graphics (green white and orange)
-		g.fillRect(0, 0, 266, 599);
-		g.setColor(Color.white);
-		g.fillRect(266, 0, 266, 599);
-		g.setColor(Color.orange);
-		g.fillRect(532, 0, 266, 599);*/
-		
 		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
 		
 		g.dispose();
