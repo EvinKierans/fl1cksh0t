@@ -70,7 +70,7 @@ public class Game extends Canvas implements Runnable
 		long lastTime = System.nanoTime();
 		try
 		{
-		    Thread.sleep(1);
+		    Thread.sleep(100);
 		}
 		catch(InterruptedException ex)
 		{
