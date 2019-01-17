@@ -68,10 +68,13 @@ public class Game extends Canvas implements Runnable
 	public void run()
 	{
 		long lastTime = System.nanoTime();
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		try
+		{
+		    Thread.sleep(1);
+		}
+		catch(InterruptedException ex)
+		{
+		    Thread.currentThread().interrupt();
 		}
 		double amountOfTicks = 100.0;
 		double ns = 1000000000/amountOfTicks;
