@@ -19,7 +19,7 @@ public class Screen extends Render
 	
 	public void render()
 	{		
-		int rotationSpeed = 1;
+		double rotationPeriod = 1;
 		
 		for(int i = 0; i < width*height; i++)
 		{
@@ -28,8 +28,8 @@ public class Screen extends Render
 
 		for(int i = 0; i< 20; i++)
 		{
-			int animX = (int) (Math.sin((System.currentTimeMillis()+i*10) % 1000.0 / 1000 * Math.PI * (rotationSpeed * 2)) * 200);	//makes it move and jingle :O
-			int animY = (int) (Math.cos((System.currentTimeMillis()+i*10) % 1000.0 / 1000 * Math.PI * (rotationSpeed * 2)) * 200);	//+i*100 is a genius part to optimise performance. When i is 1000 we get ~45-50 fps. When i is 10 * 100 we get 1100 fps
+			int animX = (int) (Math.sin((System.currentTimeMillis()+i*10) % 1000.0 / 1000 * Math.PI * (rotationPeriod * 2)) * 200);	//makes it move and jingle :O
+			int animY = (int) (Math.cos((System.currentTimeMillis()+i*10) % 1000.0 / 1000 * Math.PI * (rotationPeriod * 2)) * 200);	//+i*100 is a genius part to optimize performance. When i is 1000 we get ~45-50 fps. When i is 10 * 100 we get 1100 fps
 			draw(test, (width - 128 ) / 2 + animX, (height - 128) / 2 + animY);	//testing render from Render.java
 		}
 	}
