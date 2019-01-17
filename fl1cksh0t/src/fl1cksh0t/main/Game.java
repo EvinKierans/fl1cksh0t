@@ -1,3 +1,5 @@
+//fl1cksh0t will be a first person arena shooter type game made by Evin Kierans
+
 package fl1cksh0t.main;
 
 import java.awt.Canvas;
