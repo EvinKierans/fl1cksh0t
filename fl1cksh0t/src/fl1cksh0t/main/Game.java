@@ -4,7 +4,6 @@
 package fl1cksh0t.main;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -48,6 +47,7 @@ public class Game extends Canvas implements Runnable
 	
 	private void stop()
 	{
+		System.out.println("Game finito");
 		if (!running)
 		{
 			return;
@@ -56,7 +56,6 @@ public class Game extends Canvas implements Runnable
 		try
 		{
 			thread.join();	//waits for thread to DIE
-			running = false;
 		}catch (Exception e)	//if it wont die, make it with programming bullshit!
 		 {
 			e.printStackTrace();	//will tell us why it wont quit in console
@@ -120,7 +119,7 @@ public class Game extends Canvas implements Runnable
 		for (int i = 0; i<WIDTH * HEIGHT; i++)
 		{
 			pixels[i] = screen.pixels[i];
-		}
+		} 
 		
 		Graphics g = bs.getDrawGraphics();
 		

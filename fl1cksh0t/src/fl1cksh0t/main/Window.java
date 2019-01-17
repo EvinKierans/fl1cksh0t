@@ -24,6 +24,8 @@ public class Window extends Canvas
 		frame.setVisible(true);
 		frame.pack();
 		
+		System.out.println("Game window created");
+		
 		game.start();
 	}
 
