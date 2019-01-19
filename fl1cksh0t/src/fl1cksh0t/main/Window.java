@@ -10,7 +10,7 @@ public class Window extends Canvas
 
 	private static final long serialVersionUID = -6572041330096911686L;
 	
-	public Window(int width, int height, String title, Game game) 
+	public Window(int width, int height, String title, Display game) 
 	{
 		JFrame frame = new JFrame(title);	//inbuilt lib for frame of a window (called "frame" in this case)
 		
