@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.concurrent.TimeUnit;
 
 import fl1cksh0t.main.graphics.Screen;
 
@@ -103,7 +102,7 @@ public class Game extends Canvas implements Runnable
 			{
 				timer += 1000;
 				System.out.println("FPS = " + frames);
-				frames = 0;
+				frames = 0;	//comment this out if you want 'total frames rendered'
 			}
 		}
 		stop();
