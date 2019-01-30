@@ -1,5 +1,4 @@
 //fl1cksh0t will be a first person arena shooter type game made by Evin Kierans
-//testing from linux 1234 :D
 
 package fl1cksh0t.main;
 
@@ -9,74 +8,71 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+//Import the graphics package screen
 import fl1cksh0t.main.graphics.Screen;
 
-public class Display extends Canvas implements Runnable
-{
+public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
 
+	//Declaring resolution and window title + version
 	public static final int WIDTH = 800, HEIGHT = 600;
 	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.03";
+
+	//private variables for making the game
+	private Thread thread;					//optimising CPU performance
+	private Screen screen;					//Instance of Screen
+	private Game game;						//Instance of game
+	private boolean running = false;		//Boolean function to see if program is running or not
+	private BufferedImage img;				//basic buffered image
+	private int[] pixels;					//pixel array for updating visiom
 	
-	public int time;
-	
-	private Thread thread;
-	private Screen screen;
-	private Game game;
-	private boolean running = false;
-	private BufferedImage img;
-	private int[] pixels;
-	
-	public Display()
-	{
-		new Window(WIDTH, HEIGHT, TITLE, this);	//creating game window in game class
+	public Display() {
+		//Creating an instance of the program window, and defining the screen for it
+		new Window(WIDTH, HEIGHT, TITLE, this);
 		screen = new Screen(WIDTH, HEIGHT);
 		game = new Game();
 		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)img.getRaster().getDataBuffer()).getData();
 	}
-	
-	public synchronized void start()
-	{
-		if (running) 
-		{
+
+	//Function to start the game
+	public synchronized void start() {
+		//Checks to make sure it's running successfully
+		if (running) {
 			return;
 		}
+		//Setting program onto thread
 		running = true;
 		thread = new Thread(this);
 		thread.start();
 		
 		System.out.println("Operation Flickshot is a go");
 	}
-	
-	private void stop()
-	{
+
+	//Function to finish the game
+	private void stop() {
 		System.out.println("Game finito");
-		if (!running)
-		{
+		if (!running) {
 			return;
 		}
 		running = false;
-		try
-		{
-			thread.join();	//waits for thread to DIE
-		}catch (Exception e)	//if it wont die, make it with programming bullshit!
-		 {
-			e.printStackTrace();	//will tell us why it wont quit in console
+		//Try and Catch function to see if the game fails to quit
+		try {
+			thread.join();
+		}catch (Exception e) {
+			e.printStackTrace();
 			System.exit(0);
-		 }
+		}
 		
 	}
 	
-	public void run()
-	{
+	public void run() {
+		//Game loop - counts FPS and ticks the tock
 		long lastTime = System.nanoTime();
-		try
-		{
+		try {
 		    Thread.sleep(100);
 		}
-		catch(InterruptedException ex)
-		{
+		catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
 		double amountOfTicks = 100.0;
@@ -85,25 +81,22 @@ public class Display extends Canvas implements Runnable
 		long timer = System.currentTimeMillis();
 		int frames = 0;
 		
-		while(running == true)
-		{
+		while(running == true) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			
-			while(delta >= 1)
-			{
+			while(delta >= 1) {
 				tick();
 				delta--;
 			}
-			if(running == true)
-			{
+
+			if(running == true) {
 				render();
 			}
 			frames++;
 			
-			if(System.currentTimeMillis() - timer > 1000)
-			{
+			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println("FPS = " + frames);
 				frames = 0;	//comment this out if you want 'total frames rendered'
@@ -111,40 +104,40 @@ public class Display extends Canvas implements Runnable
 		}
 		stop();
 	}
-	
 
-	
-	private void tick()	//ticks in display
-	{
+	//Ticks the game loop
+	private void tick() {
 		game.tick();
 	}
-	
-	private void render()
-	{
+
+	//Render method allows us to update the screen on the window
+	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
-		if(bs == null)	//only want bs to run once, as it's in the render function, which is called repeatedly
-		{
-			this.createBufferStrategy(3);	//might have to take this. out at some stage, not sure though
+		//only want bs to run once, as it's in the render function, which is called repeatedly
+		if(bs == null) {
+			this.createBufferStrategy(3);
 			return;
 		}
-		
+
+		//Render the instance of game onto the screen
 		screen.render(game);
-		
-		for (int i = 0; i<WIDTH * HEIGHT; i++)
-		{
+
+		//loop fills out the pixels
+		for (int i = 0; i<WIDTH * HEIGHT; i++) {
 			pixels[i] = screen.pixels[i];
 		} 
-		
+
+		//draws nothing
 		Graphics g = bs.getDrawGraphics();
-		
 		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
-		
+
+
 		g.dispose();
 		bs.show();
 	}
-	
-	public static void main(String args[])	//main function
-	{
+
+	//Main function
+	public static void main(String args[]) {	//main function
 		new Display();
 	}
 	

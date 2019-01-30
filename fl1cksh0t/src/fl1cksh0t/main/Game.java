@@ -1,11 +1,12 @@
 package fl1cksh0t.main;
 
-public class Game 
-{
+public class Game {
+	//Another instance of time in the game
 	public int time;
-	
-	public void tick()	//ticks in game
-	{
-		time+=4; //Changes speed of rotation
+
+	//ticks in game
+	public void tick() {
+		//Changes speed of rotation
+		time+=4;
 	}
 }

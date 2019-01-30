@@ -1,6 +1,5 @@
 package fl1cksh0t.main;
 
-public class Handler 
-{
+public class Handler {
 	
 }
