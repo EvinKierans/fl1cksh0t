@@ -7,16 +7,23 @@ public class Render3d extends Render {
 		super(width, height);
 	}
 
+	double time = 0;
+
 	//Draws the floor of our game
 	public void floor() {
 		for (int y = 0; y < height; y++) {
-			double yDepth = y - height / 2.4;
-			double z = 100.0 / yDepth;
+			double ceiling = (y - height / 2.0) / height;
+
+			double z = 8 / ceiling;
+
+			time += 0.0005;
+
 			for (int x = 0; x < width; x++) {
-				double xDepth = x - width / 2;
-				xDepth *= z;
-				int xx = (int) (xDepth) & 5; //Casting because xDepth is a double
-				pixels[x + y * width] = xx * 120;
+				double depth = (x - width / 2.0) / height;
+				depth *= z;
+				int xx = (int) (depth) & 15; //Casting because depth is a double
+				int yy = (int) (z + time) & 15;
+				pixels[x + y * width] = (xx * 16) | (yy * 16)  << 8;
 			}
 		}
 	}
