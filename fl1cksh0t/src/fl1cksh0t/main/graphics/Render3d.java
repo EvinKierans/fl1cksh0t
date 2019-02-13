@@ -53,36 +53,55 @@ public class Render3d extends Render {
 
 				//ultimate render distance limitation
 				if(z > renderDistance) {
-                    pixels[x+y*width] = 0;
-                }
+					pixels[x+y*width] = 0;
+				}
 			}
 		}
 	}
 
+	//beta pixel by pixel render distance limiter - not as brute force
+	public int renderDistancePixel(int index) {
+		int colour = pixels[index];
+		int brightness = (int) (renderDistance / (zBuffer[index]));
+
+		if (brightness < 0) brightness = 0;
+		if (brightness > 255) brightness = 255;
+
+		int r = (colour >> 16) & 0xff;
+		int g = (colour >> 8) & 0xff;
+		int b = (colour) & 0xff;
+
+		r = r * brightness / 255;
+		g = g * brightness / 255;
+		b = b * brightness / 255;
+
+		return r << 16 | g << 8 | b;
+	}
+
 	//gradient for fade / fog
 	public void renderDistanceLimiter() {
-	    for(int i = 0; i < width * height; i++) {
-            int colour = pixels[i];
-            int brightness = (int) (renderDistance / (zBuffer[i]));
+		for(int i = 0; i < width * height; i++) {
+			int colour = pixels[i];
+			int brightness = (int) (renderDistance / (zBuffer[i]));
 
-            //sets ultimate minimum for brightness
-            if(brightness < 0) {
-                brightness = 0;
-            }
-            //sets ultimate maximum for brightness
-            if(brightness > 255) {
-                brightness = 255;
-            }
+			//sets ultimate minimum for brightness
+			if(brightness < 0) {
+				brightness = 0;
+			}
+			//sets ultimate maximum for brightness
+			if(brightness > 255) {
+				brightness = 255;
+			}
 
-            int r = (colour >> 16) & 0xff;
-            int g = (colour >> 8) & 0xff;
-            int b = (colour) & 0xff;
+			int r = (colour >> 16) & 0xff;
+			int g = (colour >> 8) & 0xff;
+			int b = (colour) & 0xff;
 
-            r = r * brightness/255;
-            g = g * brightness/255;
-            b = b * brightness/255;
+			r = r * brightness/255;
+			g = g * brightness/255;
+			b = b * brightness/255;
 
-            pixels[i] = r << 16 | g << 8 | b;
-        }
-    }
+			pixels[i] = r << 16 | g << 8 | b;
+		}
+	}
 }

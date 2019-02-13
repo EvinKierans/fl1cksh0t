@@ -25,6 +25,7 @@ public class Screen extends Render {
 
 		//Renders the floor as declared in Render3D
 		render.floor(game);
+		//render.renderDistancePixel(game);
 		render.renderDistanceLimiter();
 		draw(render, 0, 0);
 	}
