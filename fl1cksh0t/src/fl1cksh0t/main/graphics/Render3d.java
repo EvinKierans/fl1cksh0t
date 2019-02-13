@@ -4,8 +4,15 @@ import fl1cksh0t.main.Game;
 
 //This class renders the 3D environment - the below is standard practice for doing so
 public class Render3d extends Render {
+
+    private double renderDistance = 7500;
+
+    //array that takes on depth
+    public double[] zBuffer;
+
 	public Render3d(int width, int height) {
 		super(width, height);
+		zBuffer = new double[width*height];
 	}
 
 	//Draws the floor of our game
@@ -40,8 +47,42 @@ public class Render3d extends Render {
 				int xPix = (int) (xx + right);
 				int yPix = (int) (yy + forward);
 
+				zBuffer[x+y*width] = z;
+
 				pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
+
+				//ultimate render distance limitation
+				if(z > renderDistance) {
+                    pixels[x+y*width] = 0;
+                }
 			}
 		}
 	}
+
+	//gradient for fade / fog
+	public void renderDistanceLimiter() {
+	    for(int i = 0; i < width * height; i++) {
+            int colour = pixels[i];
+            int brightness = (int) (renderDistance / (zBuffer[i]));
+
+            //sets ultimate minimum for brightness
+            if(brightness < 0) {
+                brightness = 0;
+            }
+            //sets ultimate maximum for brightness
+            if(brightness > 255) {
+                brightness = 255;
+            }
+
+            int r = (colour >> 16) & 0xff;
+            int g = (colour >> 8) & 0xff;
+            int b = (colour) & 0xff;
+
+            r = r * brightness/255;
+            g = g * brightness/255;
+            b = b * brightness/255;
+
+            pixels[i] = r << 16 | g << 8 | b;
+        }
+    }
 }
