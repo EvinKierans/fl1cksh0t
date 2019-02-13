@@ -10,7 +10,9 @@ import java.awt.image.DataBufferInt;
 
 //Import the graphics package screen
 import fl1cksh0t.main.graphics.Screen;
+import fl1cksh0t.main.input.Controller;
 import fl1cksh0t.main.input.InputHandler;
+import jdk.internal.util.xml.impl.Input;
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
@@ -26,7 +28,11 @@ public class Display extends Canvas implements Runnable {
 	private boolean running = false;		//Boolean function to see if program is running or not
 	private BufferedImage img;				//basic buffered image
 	private int[] pixels;					//pixel array for updating vision
-	private InputHandler input;
+	private InputHandler input;				//Instance of input handler
+	private int newX = 0;					//value for recording X location
+	private int oldX = 0;					//value for recording X location
+	private int newY = 0;					//value for recording Y location
+	private int oldY = 0;					//value for recording Y location
 	
 	public Display() {
 		//Creating an instance of the program window, and defining the screen for it
@@ -110,6 +116,33 @@ public class Display extends Canvas implements Runnable {
 				System.out.println("FPS = " + frames);
 				frames = 0;	//comment this out if you want 'total frames rendered'
 			}
+			//Print statement for mouse coords
+			//System.out.println("(X, Y): (" + InputHandler.mouseX + ", " + InputHandler.mouseY + ")");
+
+			newX = InputHandler.mouseX;
+			if (newX > oldX) {
+				System.out.println("Right!!!");
+				Controller.turnRight = true;
+			} else if (newX < oldX) {
+				System.out.println("Left!!!");
+				Controller.turnLeft = true;
+			} else if (newX == oldX) {
+				System.out.println("Still!!!");
+				Controller.turnLeft = false;
+				Controller.turnRight = false;
+			}
+			oldX = newX;
+
+			newY = InputHandler.mouseY;
+			if (newY < oldY) {
+				System.out.println("Up!!!");
+			} else if (newY > oldY) {
+				System.out.println("Down!!!");
+			} else if (newY == oldY) {
+				System.out.println("Still!!!");
+			}
+			oldY = newY;
+
 		}
 		stop();
 	}

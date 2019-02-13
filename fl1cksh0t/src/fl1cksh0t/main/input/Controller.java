@@ -2,8 +2,10 @@ package fl1cksh0t.main.input;
 
 public class Controller {
     public double x, z, rotation, xa, za, rotationa;
+    public static boolean turnLeft = false;
+    public static boolean turnRight = false;
 
-    public void tick (boolean forward, boolean back, boolean left, boolean right, boolean turnLeft, boolean turnRight) {
+    public void tick (boolean forward, boolean back, boolean left, boolean right, boolean turnLeftKEY, boolean turnRightKEY) {
         //m_yaw or sensitiity
         double rotationSpeed = 0.022;
         double walkSpeed = 1;
@@ -27,10 +29,18 @@ public class Controller {
         }
 
         if(turnLeft) {
-             rotationa += rotationSpeed;
+            rotationa -= rotationSpeed;
         }
 
         if(turnRight) {
+            rotationa += rotationSpeed;
+        }
+
+        if(turnLeftKEY) {
+             rotationa += rotationSpeed;
+        }
+
+        if(turnRightKEY) {
             rotationa -= rotationSpeed;
         }
 
