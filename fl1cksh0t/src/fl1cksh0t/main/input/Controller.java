@@ -4,6 +4,7 @@ public class Controller {
     public double x, z, rotation, xa, za, rotationa;
 
     public void tick (boolean forward, boolean back, boolean left, boolean right, boolean turnLeft, boolean turnRight) {
+        //m_yaw or sensitiity
         double rotationSpeed = 0.022;
         double walkSpeed = 1;
         double xMove = 0;
