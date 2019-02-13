@@ -10,13 +10,14 @@ import java.awt.image.DataBufferInt;
 
 //Import the graphics package screen
 import fl1cksh0t.main.graphics.Screen;
+import fl1cksh0t.main.input.InputHandler;
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
 
 	//Declaring resolution and window title + version
 	public static final int WIDTH = 800, HEIGHT = 600;
-	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.03";
+	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.1";
 
 	//private variables for making the game
 	private Thread thread;					//optimising CPU performance
@@ -24,7 +25,8 @@ public class Display extends Canvas implements Runnable {
 	private Game game;						//Instance of game
 	private boolean running = false;		//Boolean function to see if program is running or not
 	private BufferedImage img;				//basic buffered image
-	private int[] pixels;					//pixel array for updating visiom
+	private int[] pixels;					//pixel array for updating vision
+	private InputHandler input;
 	
 	public Display() {
 		//Creating an instance of the program window, and defining the screen for it
@@ -33,6 +35,13 @@ public class Display extends Canvas implements Runnable {
 		game = new Game();
 		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)img.getRaster().getDataBuffer()).getData();
+
+		input = new InputHandler();
+		addKeyListener(input);
+		addFocusListener(input);
+		addMouseListener(input);
+		addMouseMotionListener(input);
+
 	}
 
 	//Function to start the game
@@ -107,7 +116,7 @@ public class Display extends Canvas implements Runnable {
 
 	//Ticks the game loop
 	private void tick() {
-		game.tick();
+		game.tick(input.key);
 	}
 
 	//Render method allows us to update the screen on the window

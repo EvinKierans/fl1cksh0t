@@ -24,7 +24,7 @@ public class Screen extends Render {
 		}
 
 		//Renders the floor as declared in Render3D
-		render.floor();
+		render.floor(game);
 		draw(render, 0, 0);
 	}
 }
