@@ -2,8 +2,7 @@
 
 package fl1cksh0t.main;
 
-import java.awt.Canvas;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -12,7 +11,6 @@ import java.awt.image.DataBufferInt;
 import fl1cksh0t.main.graphics.Screen;
 import fl1cksh0t.main.input.Controller;
 import fl1cksh0t.main.input.InputHandler;
-import jdk.internal.util.xml.impl.Input;
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
@@ -22,7 +20,7 @@ public class Display extends Canvas implements Runnable {
 	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.1";
 
 	//private variables for making the game
-	private Thread thread;					//optimising CPU performance
+	private Thread thread;					//Optimizing CPU performance
 	private Screen screen;					//Instance of Screen
 	private Game game;						//Instance of game
 	private boolean running = false;		//Boolean function to see if program is running or not
@@ -33,7 +31,11 @@ public class Display extends Canvas implements Runnable {
 	private int oldX = 0;					//value for recording X location
 	private int newY = 0;					//value for recording Y location
 	private int oldY = 0;					//value for recording Y location
-	
+	private int fps; 						//int for graphic fps counter
+
+	public static double XmouseSpeed;
+	public static double YmouseSpeed;
+
 	public Display() {
 		//Creating an instance of the program window, and defining the screen for it
 		new Window(WIDTH, HEIGHT, TITLE, this);
@@ -97,6 +99,7 @@ public class Display extends Canvas implements Runnable {
 		int frames = 0;
 		
 		while(running == true) {
+			requestFocus();
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -113,36 +116,48 @@ public class Display extends Canvas implements Runnable {
 			
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("FPS = " + frames);
+				//System.out.println("FPS = " + frames);
+				fps = frames;
 				frames = 0;	//comment this out if you want 'total frames rendered'
 			}
 			//Print statement for mouse coords
 			//System.out.println("(X, Y): (" + InputHandler.mouseX + ", " + InputHandler.mouseY + ")");
 
+			//X-Axis movement
 			newX = InputHandler.mouseX;
 			if (newX > oldX) {
-				System.out.println("Right!!!");
+				//System.out.println("Right!!!");
 				Controller.turnRight = true;
 			} else if (newX < oldX) {
-				System.out.println("Left!!!");
+				//System.out.println("Left!!!");
 				Controller.turnLeft = true;
 			} else if (newX == oldX) {
-				System.out.println("Still!!!");
+				//System.out.println("Still!!!");
 				Controller.turnLeft = false;
 				Controller.turnRight = false;
 			}
+
+			XmouseSpeed = Math.abs(newX - oldX);
+			//reset X to relative position
 			oldX = newX;
 
+			//Y-Axis movement
 			newY = InputHandler.mouseY;
 			if (newY < oldY) {
-				System.out.println("Up!!!");
+				//System.out.println("Up!!!");
+				Controller.turnDown = true;
 			} else if (newY > oldY) {
-				System.out.println("Down!!!");
+				Controller.turnUp = true;
+				//System.out.println("Down!!!");
 			} else if (newY == oldY) {
-				System.out.println("Still!!!");
+				//System.out.println("Still!!!");
+				Controller.turnUp = false;
+				Controller.turnDown = false;
 			}
-			oldY = newY;
 
+			YmouseSpeed = Math.abs(newY - oldY);
+			//reset Y to relative position
+			oldY = newY;
 		}
 		stop();
 	}
@@ -172,8 +187,9 @@ public class Display extends Canvas implements Runnable {
 		//draws nothing
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
-
-
+		g.setFont(new Font("Verdanna", 1, 16));
+		g.setColor(Color.YELLOW);
+		g.drawString( fps+" FPS", 10,20);
 		g.dispose();
 		bs.show();
 	}

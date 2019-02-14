@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="fl1cksh0t:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/fl1cksh0t_jar</output-path>
+    <root id="archive" name="fl1cksh0t.jar">
+      <element id="module-output" name="fl1cksh0t" />
+      <element id="dir-copy" path="$PROJECT_DIR$/fl1cksh0t/res" />
+    </root>
+  </artifact>
+</component>

@@ -1,6 +1,7 @@
 package fl1cksh0t.main.graphics;
 
 import fl1cksh0t.main.Game;
+import fl1cksh0t.main.input.Controller;
 
 //This class renders the 3D environment - the below is standard practice for doing so
 public class Render3d extends Render {
@@ -22,19 +23,45 @@ public class Render3d extends Render {
 		double ceilingPosition = 16;
 		double forward = game.controls.z;
 		double right = game.controls.x;
+		double up = game.controls.y;
+		double viewbobMove = Math.sin(game.time / 6.0) * 0.5; //default bob cycle -> walking
+
+		if(Controller.sprintMove) {
+			viewbobMove = Math.sin(game.time / 6.0) * 0.8;
+		}
+		if(Controller.proneMove) {
+			viewbobMove = Math.sin(game.time / 6.0) * 0.3;
+		}
+		if(Controller.crouchMove) {
+			viewbobMove = Math.sin(game.time / 6.0) * 0.2;
+		}
 
 		double rotation =  game.controls.rotation;
 		double cosine = Math.cos(rotation);
 		double sine = Math.sin(rotation);
 
+		double verticalRotation = game.controls.verticalRotation;
+		double vcosine = Math.cos(verticalRotation);
+		double vsine = Math.sin(verticalRotation);
+
 		for (int y = 0; y < height; y++) {
 			double ceiling = (y - height / 2.0) / height;
 
-			double z = floorPosition / ceiling;
+			double z = (floorPosition + up) / ceiling;
 
 			//fixes confusing floor and ceiling clash
 			if(ceiling < 0) {
-				z = ceilingPosition / -ceiling;
+				z = (ceilingPosition - up) / -ceiling;
+			}
+
+			//Movement mechanics
+			if(Controller.walkMove == true) {
+				z = (floorPosition + up + viewbobMove) / ceiling;
+
+				//fixes confusing floor and ceiling clash
+				if(ceiling < 0) {
+					z = (ceilingPosition - up - viewbobMove) / -ceiling;
+				}
 			}
 
 			for (int x = 0; x < width; x++) {
@@ -49,7 +76,8 @@ public class Render3d extends Render {
 
 				zBuffer[x+y*width] = z;
 
-				pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
+				//pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
+				pixels[x + y * width] = Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
 
 				//ultimate render distance limitation
 				if(z > renderDistance) {
