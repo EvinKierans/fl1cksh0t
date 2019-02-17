@@ -36,9 +36,9 @@ public class Render3d extends Render {
 			viewbobMove = Math.sin(game.time / 6.0) * 0.2;
 		}
 
-		double rotation =  game.controls.rotation;
-		double cosine = Math.cos(rotation);
-		double sine = Math.sin(rotation);
+		double horizontalRotation =  game.controls.rotation;
+		double cosine = Math.cos(horizontalRotation);
+		double sine = Math.sin(horizontalRotation);
 
 		double verticalRotation = game.controls.verticalRotation;
 		double vcosine = Math.cos(verticalRotation);
@@ -54,7 +54,7 @@ public class Render3d extends Render {
 				z = (ceilingPosition - up) / -ceiling;
 			}
 
-			//Movement mechanics
+			//Movement bobbing mechanics
 			if(Controller.walkMove == true) {
 				z = (floorPosition + up + viewbobMove) / ceiling;
 
@@ -74,14 +74,14 @@ public class Render3d extends Render {
 				int xPix = (int) (xx + right);
 				int yPix = (int) (yy + forward);
 
-				zBuffer[x+y*width] = z;
+				zBuffer[x + y * width] = z;
 
 				//pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
 				pixels[x + y * width] = Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
 
 				//ultimate render distance limitation
 				if(z > renderDistance) {
-					pixels[x+y*width] = 0;
+					pixels[x + y * width] = 0;
 				}
 			}
 		}

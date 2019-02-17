@@ -121,7 +121,7 @@ public class Display extends Canvas implements Runnable {
 				frames = 0;	//comment this out if you want 'total frames rendered'
 			}
 			//Print statement for mouse coords
-			//System.out.println("(X, Y): (" + InputHandler.mouseX + ", " + InputHandler.mouseY + ")");
+			System.out.println("(X, Y): (" + InputHandler.mouseX + ", " + InputHandler.mouseY + ")");
 
 			//X-Axis movement
 			newX = InputHandler.mouseX;
