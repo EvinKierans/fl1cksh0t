@@ -76,6 +76,7 @@ public class Render3d extends Render {
 
 				zBuffer[x + y * width] = z;
 
+				//textures need rework
 				pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
 				//pixels[x + y * width] = Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
 
