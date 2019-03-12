@@ -1,5 +1,8 @@
 package fl1cksh0t.main.input;
 
+import fl1cksh0t.main.Display;
+
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -14,10 +17,21 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	public static int mouseX;
 	public static int mouseY;
 	public static int mouseButton;
+	Robot r;
+
+	void CenterMouse()
+	{
+		try {
+			r = new Robot();
+			r.mouseMove((int)(Display.WIDTH), (int)(Display.HEIGHT));
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		CenterMouse();
 
 	}
 
@@ -25,6 +39,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
+		CenterMouse();
 	}
 
 	@Override

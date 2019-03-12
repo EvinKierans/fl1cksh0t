@@ -28,7 +28,7 @@ public class Window extends Canvas {
 		frame.add(game);
 		frame.setVisible(true);
 		frame.pack();
-		frame.getContentPane().setCursor(blank);
+		//frame.getContentPane().setCursor(blank);
 
 		//Checker for loading window correctly
 		System.out.println("Game window created");

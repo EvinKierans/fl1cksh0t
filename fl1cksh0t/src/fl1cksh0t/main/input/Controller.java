@@ -16,8 +16,8 @@ public class Controller {
     public void tick (boolean forward, boolean back, boolean right, boolean left, boolean turnLeftKEY, boolean turnRightKEY, boolean turnUpKEY, boolean turnDownKEY, boolean jump, boolean crouch, boolean sprint, boolean prone) {
 
         //m_yaw or sensitivity for mouse
-        double xrotationSpeed = 0.002 * Display.XmouseSpeed;
-        double yrotationSpeed = 0.002 * Display.YmouseSpeed;
+        double xrotationSpeed = 0.1 * Display.XmouseSpeed;
+        double yrotationSpeed = 0.1 * Display.YmouseSpeed;
 
         //speed for keyboard
         double xKeyrotationSpeed = 0.022;

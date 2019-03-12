@@ -16,7 +16,7 @@ public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
 
 	//Declaring resolution and window title + version
-	public static final int WIDTH = 800, HEIGHT = 600;
+	public static final int WIDTH = 1280, HEIGHT = 720;
 	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.1";
 
 	//private variables for making the game
