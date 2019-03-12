@@ -3,11 +3,14 @@ package fl1cksh0t.main.input;
 import fl1cksh0t.main.Display;
 
 public class Controller {
-    public double x, y, z, rotation, xa, ya, za, rotationa, verticalRotation, verticalRotationa;
+    private double xa, ya, za, rotationa, verticalRotationa;
+    public double rotation, verticalRotation, x, y, z;
+
     public static boolean turnLeft = false;
     public static boolean turnRight = false;
     public static boolean turnUp = false;
     public static boolean turnDown = false;
+
     public static boolean walkMove = false;
     public static boolean sprintMove = false;
     public static boolean crouchMove = false;
@@ -88,11 +91,11 @@ public class Controller {
             rotationa -= xKeyrotationSpeed;
         }
 
-        if(turnRightKEY) {
+        if(turnUpKEY) {
             rotationa += yKeyrotationSpeed;
         }
 
-        if(turnRightKEY) {
+        if(turnDownKEY) {
             rotationa -= yKeyrotationSpeed;
         }
 

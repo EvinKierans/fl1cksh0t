@@ -13,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 
 public class InputHandler implements KeyListener, FocusListener, MouseListener, MouseMotionListener {
 
+	//key input boolean
 	public boolean[] key = new boolean[68836];
 	public static int mouseX;
 	public static int mouseY;

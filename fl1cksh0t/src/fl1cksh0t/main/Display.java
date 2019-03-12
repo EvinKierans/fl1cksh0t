@@ -121,8 +121,10 @@ public class Display extends Canvas implements Runnable {
 				frames = 0;	//comment this out if you want 'total frames rendered'
 			}
 			//Print statement for mouse coords
-			System.out.println("(X, Y): (" + InputHandler.mouseX + ", " + InputHandler.mouseY + ")");
+			//System.out.println("(X, Y): (" + InputHandler.mouseX + ", " + InputHandler.mouseY + ")");
 
+
+			//MOUSE MOVEMENT
 			//X-Axis movement
 			newX = InputHandler.mouseX;
 			if (newX > oldX) {
@@ -136,7 +138,6 @@ public class Display extends Canvas implements Runnable {
 				Controller.turnLeft = false;
 				Controller.turnRight = false;
 			}
-
 			XmouseSpeed = Math.abs(newX - oldX);
 			//reset X to relative position
 			oldX = newX;
@@ -154,7 +155,6 @@ public class Display extends Canvas implements Runnable {
 				Controller.turnUp = false;
 				Controller.turnDown = false;
 			}
-
 			YmouseSpeed = Math.abs(newY - oldY);
 			//reset Y to relative position
 			oldY = newY;

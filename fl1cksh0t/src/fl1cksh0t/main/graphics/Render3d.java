@@ -76,8 +76,11 @@ public class Render3d extends Render {
 
 				zBuffer[x + y * width] = z;
 
-				//pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
-				pixels[x + y * width] = Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
+				//textures need rework
+				//Error is as follows
+				//Exception in thread "Thread-0" java.lang.ExceptionInInitializerError
+				pixels[x + y * width] = ((xPix & 15) * 16) | ( (yPix & 15) * 16)  << 8;
+				//pixels[x + y * width] = Texture.floor.pixels[(xPix & 7) + (yPix & 7) * 8];
 
 				//ultimate render distance limitation
 				if(z > renderDistance) {
