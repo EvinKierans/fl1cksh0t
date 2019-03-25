@@ -117,7 +117,7 @@ public class Controller {
             //Jump cooldown
             if(now - lastClickTime > jumpCooldown) {
                 //jump height needs serious adjusting
-                y += jumpHeight*2;
+                y += jumpHeight;
                 //Key release so fall after jump
                 try {
                     Robot r = new Robot();
