@@ -24,7 +24,7 @@ public class Render3d extends Render {
 		double forward = game.controls.z;
 		double right = game.controls.x;
 		double up = game.controls.y;
-		double viewbobMove = Math.sin(game.time / 6.0) * 0.5; //default bob cycle -> walking
+		double viewbobMove = Math.sin(game.time / 6.0) * 0; //default bob cycle -> walking
 
 		if(Controller.sprintMove) {
 			viewbobMove = Math.sin(game.time / 6.0) * 0.8;
