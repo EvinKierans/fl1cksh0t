@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Texture {
 
-    public static Render floor = loadBitmap("/textures/grassfloordetailed.png");
+    public static Render floor = loadBitmap("/textures/grass2024.jpg");
     public static Render loadBitmap(String fileName) {
         try{
             BufferedImage image = ImageIO.read(Texture.class.getResource(fileName));

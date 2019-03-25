@@ -2,6 +2,11 @@ package fl1cksh0t.main.input;
 
 import fl1cksh0t.main.Display;
 
+import java.awt.*;
+
+import static fl1cksh0t.main.input.InputHandler.lastClickTime;
+import static java.awt.event.KeyEvent.VK_SPACE;
+
 public class Controller {
     private double xa, ya, za, rotationa, verticalRotationa;
     public double rotation, verticalRotation, x, y, z;
@@ -16,11 +21,13 @@ public class Controller {
     public static boolean crouchMove = false;
     public static boolean proneMove = false;
 
+    public double sensitivity = 2.0;
+
     public void tick (boolean forward, boolean back, boolean right, boolean left, boolean turnLeftKEY, boolean turnRightKEY, boolean turnUpKEY, boolean turnDownKEY, boolean jump, boolean crouch, boolean sprint, boolean prone) {
 
         //m_yaw or sensitivity for mouse
-        double xrotationSpeed = 0.1 * Display.XmouseSpeed;
-        double yrotationSpeed = 0.1 * Display.YmouseSpeed;
+        double xrotationSpeed = 0.00022 * Display.XmouseSpeed * sensitivity;
+        double yrotationSpeed = 0.022 * Display.YmouseSpeed;
 
         //speed for keyboard
         double xKeyrotationSpeed = 0.022;
@@ -29,15 +36,20 @@ public class Controller {
         //Movement variables
         double walkSpeed = 0.5;
         double xMove = 0;
-        double yMove = 0;
         double zMove = 0;
-        double jumpHeight = 1;
         double crouchDepth = 0.5;
         double proneDepth = 0.75;
+        double jumpHeight = 1.75;
+        long now;
+        long jumpCooldown = 500;
 
         if(forward) {
             zMove++;
-            walkMove = true;
+            if(forward && !jump){
+                walkMove = true;
+            } else {
+                walkMove = false;
+            }
         }
 
         if(back) {
@@ -100,14 +112,31 @@ public class Controller {
         }
 
         if(jump) {
-            y += jumpHeight;
+            now = System.currentTimeMillis();
+            //Jump cooldown
+            if(now - lastClickTime > jumpCooldown) {
+                //jump height needs serious adjusting
+                y += jumpHeight*2;
+                //Key release so fall after jump
+                try {
+                    Robot r = new Robot();
+                    r.keyRelease(VK_SPACE);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                lastClickTime = System.currentTimeMillis();
+                return;
+            } else {
+                return;
+            }
+
         }
 
         if(crouch) {
             y -= crouchDepth;
             walkSpeed = walkSpeed / 3;
             crouchMove = true;
-        }else if(prone) {
+        } else if(prone) {
             y -= proneDepth;
             walkSpeed = walkSpeed / 5;
             proneMove = true;
@@ -129,7 +158,6 @@ public class Controller {
         }
 
         xa += (xMove * Math.cos(rotation) + zMove * Math.sin(rotation)) * walkSpeed;
-        //ya += (yMove * Math.cos(verticalRotation + ))
         za += (zMove * Math.cos(rotation) - xMove * Math.sin(rotation)) * walkSpeed;
 
         x += xa;

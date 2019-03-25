@@ -5,7 +5,7 @@ import fl1cksh0t.main.Game;
 
 public class Screen extends Render {
 	private Render test;
-	private Render3d render;
+	public Render3d render;
 	
 	public Screen(int width, int height) {
 		super(width, height);

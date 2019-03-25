@@ -20,7 +20,7 @@ public class Render3d extends Render {
 	public void floor(Game game) {
 
 		double floorPosition = 8;
-		double ceilingPosition = 16;
+		double ceilingPosition = 50;
 		double forward = game.controls.z;
 		double right = game.controls.x;
 		double up = game.controls.y;
@@ -39,10 +39,6 @@ public class Render3d extends Render {
 		double horizontalRotation =  game.controls.rotation;
 		double cosine = Math.cos(horizontalRotation);
 		double sine = Math.sin(horizontalRotation);
-
-		double verticalRotation = game.controls.verticalRotation;
-		double vcosine = Math.cos(verticalRotation);
-		double vsine = Math.sin(verticalRotation);
 
 		for (int y = 0; y < height; y++) {
 			double ceiling = (y - height / 2.0) / height;
@@ -91,9 +87,15 @@ public class Render3d extends Render {
 	}
 
 	//beta pixel by pixel render distance limiter - not as brute force
-	public int renderDistancePixel(int index) {
-		int colour = pixels[index];
-		int brightness = (int) (renderDistance / (zBuffer[index]));
+	public int renderDistancePixel() {
+
+		int colour = 0;
+		int brightness = 0;
+
+		for(int i = 0; i < width * height; i++) {
+			colour = pixels[i];
+			brightness = (int) (renderDistance / (zBuffer[i]));
+		}
 
 		if (brightness < 0) brightness = 0;
 		if (brightness > 255) brightness = 255;

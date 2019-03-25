@@ -1,6 +1,7 @@
 package fl1cksh0t.main.input;
 
 import fl1cksh0t.main.Display;
+import fl1cksh0t.main.Game;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -18,13 +19,14 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	public static int mouseX;
 	public static int mouseY;
 	public static int mouseButton;
+	public static long lastClickTime = 0;
 	Robot r;
 
-	void CenterMouse()
+	public void CenterMouse()
 	{
 		try {
 			r = new Robot();
-			r.mouseMove((int)(Display.WIDTH), (int)(Display.HEIGHT));
+			r.mouseMove((int)(Display.WIDTH/2), (int)(Display.HEIGHT/2));
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
@@ -32,7 +34,6 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		CenterMouse();
 
 	}
 
@@ -40,7 +41,6 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
-		CenterMouse();
 	}
 
 	@Override
@@ -52,31 +52,31 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -16,7 +16,8 @@ public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
 
 	//Declaring resolution and window title + version
-	public static final int WIDTH = 1280, HEIGHT = 720;
+	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int WIDTH = (int) screenSize.getWidth(), HEIGHT = (int) screenSize.getHeight();
 	public static final String TITLE = "fl1cksh0t - Pre-Alpha v0.1";
 
 	//private variables for making the game
@@ -127,6 +128,7 @@ public class Display extends Canvas implements Runnable {
 			//MOUSE MOVEMENT
 			//X-Axis movement
 			newX = InputHandler.mouseX;
+			input.CenterMouse();
 			if (newX > oldX) {
 				//System.out.println("Right!!!");
 				Controller.turnRight = true;
@@ -144,6 +146,7 @@ public class Display extends Canvas implements Runnable {
 
 			//Y-Axis movement
 			newY = InputHandler.mouseY;
+			input.CenterMouse();
 			if (newY < oldY) {
 				//System.out.println("Up!!!");
 				Controller.turnDown = true;

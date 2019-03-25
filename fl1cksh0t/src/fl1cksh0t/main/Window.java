@@ -23,12 +23,14 @@ public class Window extends Canvas {
 		frame.setMaximumSize(new Dimension(width, height));
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//enables windows X button
-		frame.setResizable(false);								//uses default size only - may rework later for lower end machines
+		frame.setResizable(true);								//uses default size only - may rework later for lower end machines
 		frame.setLocationRelativeTo(null);						//Window spawns in middle of screen as opposed to top left
 		frame.add(game);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setUndecorated(true);
 		frame.setVisible(true);
 		frame.pack();
-		//frame.getContentPane().setCursor(blank);
+		frame.getContentPane().setCursor(blank);
 
 		//Checker for loading window correctly
 		System.out.println("Game window created");

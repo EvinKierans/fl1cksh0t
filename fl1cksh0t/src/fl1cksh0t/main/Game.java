@@ -5,7 +5,7 @@ import fl1cksh0t.main.input.Controller;
 import java.awt.event.KeyEvent;
 
 public class Game {
-	//Another instance of time in the game
+    //Another instance of time in the game
 	public int time;
 	public Controller controls;
 
@@ -18,6 +18,7 @@ public class Game {
 	public void tick(boolean[] key) {
 		//Changes speed of rotation
 		time++;
+
 		boolean forward = key[KeyEvent.VK_W];
 		boolean back = key[KeyEvent.VK_S];
 		boolean right = key[KeyEvent.VK_D];
