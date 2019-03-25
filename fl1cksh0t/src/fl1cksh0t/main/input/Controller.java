@@ -111,6 +111,7 @@ public class Controller {
             rotationa -= yKeyrotationSpeed;
         }
 
+        //Bug when jump key is held down - spazzes out
         if(jump) {
             now = System.currentTimeMillis();
             //Jump cooldown
@@ -129,7 +130,6 @@ public class Controller {
             } else {
                 return;
             }
-
         }
 
         if(crouch) {
