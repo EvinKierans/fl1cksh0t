@@ -15,6 +15,10 @@ import fl1cksh0t.main.input.InputHandler;
 //TODO
 //Fix jumping height and speed - fix key held down
 //Fix that you can't prone when crouching, only crouch when prone
+//Add crosshair
+//Add terrain
+//Add terrain textures
+//Add objects
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
@@ -132,7 +136,6 @@ public class Display extends Canvas implements Runnable {
 			//MOUSE MOVEMENT
 			//X-Axis movement
 			newX = InputHandler.mouseX;
-			input.CenterMouse();
 			if (newX > oldX) {
 				//System.out.println("Right!!!");
 				Controller.turnRight = true;
@@ -150,7 +153,6 @@ public class Display extends Canvas implements Runnable {
 
 			//Y-Axis movement
 			newY = InputHandler.mouseY;
-			input.CenterMouse();
 			if (newY < oldY) {
 				//System.out.println("Up!!!");
 				Controller.turnDown = true;
