@@ -40,9 +40,11 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		//CenterMouse();
 		mouseX = e.getX();
 		mouseY = e.getY();
+		if(mouseX <= 0 || mouseX >= Display.WIDTH - 1) {
+			CenterMouse();
+		}
 	}
 
 	@Override
