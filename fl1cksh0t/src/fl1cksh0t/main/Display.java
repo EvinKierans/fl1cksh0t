@@ -132,13 +132,14 @@ public class Display extends Canvas implements Runnable {
 			//MOUSE MOVEMENT
 			//X-Axis movement
 			newX = InputHandler.mouseX;
-			input.CenterMouse();
 			if (newX > oldX) {
 				//System.out.println("Right!!!");
 				Controller.turnRight = true;
+				Controller.turnLeft = false;
 			} else if (newX < oldX) {
 				//System.out.println("Left!!!");
 				Controller.turnLeft = true;
+				Controller.turnRight = false;
 			} else if (newX == oldX) {
 				//System.out.println("Still!!!");
 				Controller.turnLeft = false;
@@ -150,7 +151,6 @@ public class Display extends Canvas implements Runnable {
 
 			//Y-Axis movement
 			newY = InputHandler.mouseY;
-			input.CenterMouse();
 			if (newY < oldY) {
 				//System.out.println("Up!!!");
 				Controller.turnDown = true;

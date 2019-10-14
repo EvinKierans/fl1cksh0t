@@ -22,11 +22,12 @@ public class Controller {
     public static boolean proneMove = false;
 
     public double sensitivity = 2.0;
+    public double jumpHeight = 1.75;
 
     public void tick (boolean forward, boolean back, boolean right, boolean left, boolean turnLeftKEY, boolean turnRightKEY, boolean turnUpKEY, boolean turnDownKEY, boolean jump, boolean crouch, boolean sprint, boolean prone) {
 
         //m_yaw or sensitivity for mouse
-        double xrotationSpeed = 0.00022 * Display.XmouseSpeed * sensitivity;
+        double xrotationSpeed = 0.0001 * Display.XmouseSpeed * sensitivity;
         double yrotationSpeed = 0.022 * Display.YmouseSpeed;
 
         //speed for keyboard
@@ -39,7 +40,6 @@ public class Controller {
         double zMove = 0;
         double crouchDepth = 0.5;
         double proneDepth = 0.75;
-        double jumpHeight = 1.75;
         long now;
         long jumpCooldown = 500;
 
@@ -113,24 +113,10 @@ public class Controller {
 
         //Bug when jump key is held down - spazzes out
         if(jump) {
-            now = System.currentTimeMillis();
-            //Jump cooldown
-            if(now - lastClickTime > jumpCooldown) {
-                //jump height needs serious adjusting
-                y += jumpHeight;
-                //Key release so fall after jump
-                try {
-                    Robot r = new Robot();
-                    r.keyRelease(VK_SPACE);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                lastClickTime = System.currentTimeMillis();
-                return;
-            } else {
-                return;
-            }
+            jump();
+            //jumpFall();
         }
+
 
         if(crouch) {
             y -= crouchDepth;
@@ -165,7 +151,6 @@ public class Controller {
         z += za;
 
         xa *= 0.1;
-        ya *= 0.1;
         za *= 0.1;
 
         y *= 0.9;
@@ -175,6 +160,13 @@ public class Controller {
 
         rotation += rotationa;
         rotationa *= 0.5;
+    }
+
+    public void jump() {
+        y += jumpHeight;
+    }
+    public void jumpFall() {
+        y -= jumpHeight;
     }
 
 }
