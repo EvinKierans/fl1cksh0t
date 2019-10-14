@@ -2,9 +2,6 @@ package fl1cksh0t.main.input;
 
 import fl1cksh0t.main.Display;
 
-import java.awt.*;
-
-import static fl1cksh0t.main.input.InputHandler.lastClickTime;
 import static java.awt.event.KeyEvent.VK_SPACE;
 
 public class Controller {
@@ -21,13 +18,19 @@ public class Controller {
     public static boolean crouchMove = false;
     public static boolean proneMove = false;
 
-    public double sensitivity = 2.0;
-    public double jumpHeight = 1.75;
+    public static boolean jumping = false;
+    double initialHeight = 0;
+
+    public double maximumJumpHeight = 1;
+    public double jumpHeightIndex = 0.1;
+    public long now;
+    public long lastJumpTime = 0;
+    public long jumpCooldown = 500;
 
     public void tick (boolean forward, boolean back, boolean right, boolean left, boolean turnLeftKEY, boolean turnRightKEY, boolean turnUpKEY, boolean turnDownKEY, boolean jump, boolean crouch, boolean sprint, boolean prone) {
 
         //m_yaw or sensitivity for mouse
-        double xrotationSpeed = 0.0001 * Display.XmouseSpeed * sensitivity;
+        double xrotationSpeed = 0.0022 * Display.XmouseSpeed;
         double yrotationSpeed = 0.022 * Display.YmouseSpeed;
 
         //speed for keyboard
@@ -40,8 +43,6 @@ public class Controller {
         double zMove = 0;
         double crouchDepth = 0.5;
         double proneDepth = 0.75;
-        long now;
-        long jumpCooldown = 500;
 
         if(forward) {
             zMove++;
@@ -111,13 +112,6 @@ public class Controller {
             rotationa -= yKeyrotationSpeed;
         }
 
-        //Bug when jump key is held down - spazzes out
-        if(jump) {
-            jump();
-            //jumpFall();
-        }
-
-
         if(crouch) {
             y -= crouchDepth;
             walkSpeed = walkSpeed / 3;
@@ -143,6 +137,19 @@ public class Controller {
             proneMove = false;
         }
 
+        //TODO
+        if(jump) {
+            y += maximumJumpHeight;
+
+            initialHeight = y;
+
+//            now = System.currentTimeMillis();
+//            System.out.println("Jumping = true (in jump)");
+//            jumpCooldownChecker();
+//            System.out.println("jumping = false (in jump)");
+//            lastJumpTime = System.currentTimeMillis();
+        }
+
         xa += (xMove * Math.cos(rotation) + zMove * Math.sin(rotation)) * walkSpeed;
         za += (zMove * Math.cos(rotation) - xMove * Math.sin(rotation)) * walkSpeed;
 
@@ -151,6 +158,7 @@ public class Controller {
         z += za;
 
         xa *= 0.1;
+        ya *= 0.1;
         za *= 0.1;
 
         y *= 0.9;
@@ -162,11 +170,38 @@ public class Controller {
         rotationa *= 0.5;
     }
 
-    public void jump() {
-        y += jumpHeight;
-    }
-    public void jumpFall() {
-        y -= jumpHeight;
-    }
-
+//    public void jump(double initialHeight) {
+//
+//        System.out.println("Jump rising");
+//        while (y < initialHeight + maximumJumpHeight) {
+//            System.out.println("Jump++++");
+//            y += jumpHeightIndex;
+//            if (y == initialHeight + maximumJumpHeight) {
+//                jumping = false;
+//                jumpFall(initialHeight);
+//            }
+//        }
+//    }
+//
+//    public void jumpFall(double initialHeight) {
+//        System.out.println("Jump falling ------------------");
+//        while(y > initialHeight){
+//            System.out.println("Jump----");
+//            y-=jumpHeightIndex;
+//        }
+//    }
+//
+//    public void jumpCooldown() {
+//        System.out.println("Jumping Cooldown Activated");
+//    }
+//
+//    public void jumpCooldownChecker() {
+//        if(now - lastJumpTime > jumpCooldown) {
+//            System.out.println("Jump not cooled");
+//            jump(initialHeight);
+//        } else {
+//            jumpCooldown();
+//            return;
+//        }
+//    }
 }

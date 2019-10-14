@@ -15,6 +15,10 @@ import fl1cksh0t.main.input.InputHandler;
 //TODO
 //Fix jumping height and speed - fix key held down
 //Fix that you can't prone when crouching, only crouch when prone
+//Add crosshair
+//Add terrain
+//Add terrain textures
+//Add objects
 
 public class Display extends Canvas implements Runnable {
 	private static final long serialVersionUID = -3316329364487365225L;
